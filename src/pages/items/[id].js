@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { Card, CardContent, Typography, CardMedia, Button, Grid, Box, Chip } from '@mui/material';
 import { getItemById } from '../../lib/api';
 import Layout from "@/Layout";
+import ImageMedia from "@/components/ImageMedia";
 
 const ItemDetail = ({ item }) => {
     const router = useRouter();
@@ -11,17 +12,11 @@ const ItemDetail = ({ item }) => {
 
     return (
         <Layout title={'Details Movie'}>
-            <Grid container justifyContent="center" alignItems="center" style={{ height: '40vh' }}>
-                <Card style={{ maxWidth: 500, width: '80%', borderRadius: '15px' }} elevation={10}>
+            <Grid container justifyContent="center" alignItems="center" >
+                <Card style={{ maxWidth: 500, width: '80%', borderRadius: '15px' }} elevation={5} size="lg">
                     <CardContent color='primary'>
-                        <CardMedia
-                            component="img"
-                            alt={item.name}
-                            height="250px"
-                            image={item.image}
-                            style={{ objectFit: 'fill',borderTopLeftRadius: '20px', borderTopRightRadius: '20px' }}
-                        />
-                        <Box mb={3}>
+                        <ImageMedia image={item.image} name={item.name}/>
+                        <Box mb={1}>
                             <Typography variant="h4" align="center">
                                 {item.name}
                             </Typography>
@@ -63,10 +58,8 @@ export async function getServerSideProps(context) {
     const { id } = context.query;
 
     try {
-        // Llamar a la función getItemById en el servidor
         const item = await getItemById(id);
 
-        // Pasar el resultado como propiedades a la página
         return {
             props: {
                 item,

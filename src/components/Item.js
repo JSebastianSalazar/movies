@@ -1,5 +1,6 @@
 import {Button, Card, CardActions, CardContent, CardMedia, Grid, Typography} from "@mui/material";
 import Link from "next/link";
+import ImageMedia from "@/components/ImageMedia";
 
 export const Item = ({author, id, name, image}) => {
     return (
@@ -18,18 +19,7 @@ export const Item = ({author, id, name, image}) => {
                     }
                 }}>
                 <CardContent color='primary'>
-                    <CardMedia
-                        component="img"
-                        image={image}
-                        alt={name}
-                        height="250px"
-                        style={{
-                            objectFit: 'fill',
-                            width: '100%',
-                            borderTopLeftRadius: '20px',
-                            borderTopRightRadius: '20px'
-                        }}
-                    />
+                    <ImageMedia image={image} name={name}/>
                     <CardContent>
                         <Typography color="textSecondary" gutterBottom variant="h5" component="div">
                             {name}
