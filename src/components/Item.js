@@ -1,6 +1,7 @@
+import React from 'react';
 import {Button, Card, CardActions, CardContent, CardMedia, Grid, Typography} from "@mui/material";
 import Link from "next/link";
-import ImageMedia from "@/components/ImageMedia";
+import ImageMedia from "./ImageMedia";
 
 export const Item = ({author, id, name, image}) => {
     return (
@@ -9,7 +10,7 @@ export const Item = ({author, id, name, image}) => {
               alignItems="center">
             <Card
                 variant="soft"
-                elevation={4}
+                elevation={6}
                 size="lg"
                 sx={{
                     borderRadius: '15px',

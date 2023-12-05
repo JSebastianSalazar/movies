@@ -1,0 +1,1 @@
+export const encodeSearchQuery = (query) => encodeURIComponent(query);

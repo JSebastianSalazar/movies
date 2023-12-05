@@ -21,7 +21,7 @@ export const searchItems = async (query) => {
 export const getItemById = async (id) => {
     try {
         const response = await axios.get(`${API_BASE_URL}/movie/v1/${id}`);
-
+        console.log(response)
         return response.data;
     } catch (error) {
         console.error('Error getting item by id:', error);

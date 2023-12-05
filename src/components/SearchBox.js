@@ -1,14 +1,15 @@
+import React from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button, Input, Grid, Paper } from '@mui/material';
+import {encodeSearchQuery} from "../utils/utils";
 
 const SearchBox = () => {
     const router = useRouter();
     const [query, setQuery] = useState('');
     const handleSearch = (e) => {
         e.preventDefault();
-        console.log(query)
-        router.push(`/items?search=${query}`);
+        router.push(`/items?search=${encodeSearchQuery(query)}`);
     };
 
     return (

@@ -1,4 +1,3 @@
-// pages/items/[id].js
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Card, CardContent, Typography, CardMedia, Button, Grid, Box, Chip } from '@mui/material';
@@ -66,7 +65,6 @@ export async function getServerSideProps(context) {
             },
         };
     } catch (error) {
-        console.error('Error getting item by id:', error);
         return {
             notFound: true,
         };

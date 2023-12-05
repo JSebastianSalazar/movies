@@ -1,10 +1,11 @@
+import React from 'react';
 import {
     Grid,
     Skeleton,
 } from '@mui/material';
 import {searchItems} from '../../lib/api/index';
-import {Item} from "@/components/Item";
-import Layout from "@/Layout";
+import Layout from "../../Layout";
+import {Item} from "../../components/Item";
 
 const ItemsList = ({items}) => {
     console.log(items)
@@ -40,7 +41,6 @@ export async function getServerSideProps(context) {
     const {search} = query;
 
     const items = await searchItems(search);
-    console.log(items)
     return {
         props: {
             items,
