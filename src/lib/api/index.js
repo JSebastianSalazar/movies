@@ -1,66 +1,29 @@
-const items = [
-    {
-        "id": 1,
-        "name": "The Shawshank",
-        "overview": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
-        "status": false,
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzYwsITh63MmQxJ6nrVeXlp6q-2yKesoN_m_z8KtjiQA&s",
-        "genres": "Drama",
-        "author": "Frank Darabont"
-    },
-    {
-        "id": 2,
-        "name": "The Godfather",
-        "overview": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
-        "status": false,
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzYwsITh63MmQxJ6nrVeXlp6q-2yKesoN_m_z8KtjiQA&s",
-        "genres": "Drama",
-        "author": "Frank Darabont"
-    },
-    {
-        "id": 3,
-        "name": "The Dark Knight",
-        "overview": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
-        "status": false,
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzYwsITh63MmQxJ6nrVeXlp6q-2yKesoN_m_z8KtjiQA&s",
-        "genres": "Drama",
-        "author": "Frank Darabont"
-    },
-    {
-        "id": 4,
-        "name": "John wick",
-        "overview": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
-        "status": false,
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzYwsITh63MmQxJ6nrVeXlp6q-2yKesoN_m_z8KtjiQA&s",
-        "genres": "Drama",
-        "author": "Frank Darabont"
+import axios from 'axios';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+export const searchItems = async (query) => {
+    console.log(API_BASE_URL)
+    try {
+        const response = await axios.get(`${API_BASE_URL}/movies/v1`, {
+            params: {
+                name: query,
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Error searching items:', error);
+        throw error;
     }
-];
-
-export const searchItems = (query) => {
-
-    return new Promise((resolve) => {
-        const results = items.filter((item) =>
-            item.name.toLowerCase().includes(query.toLowerCase())
-        );
-        resolve(results.slice(0, 4));
-    });
 };
 
-export const getItemById = (id) => {
+export const getItemById = async (id) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/movie/v1/${id}`);
 
-    return new Promise((resolve) => {
-        const item = items.find((i) => i.id === parseInt(id));
-        resolve(item);
-    });
-};
-
-
-export const getAllItems = async () => {
-    return new Promise((resolve) => {
-
-        setTimeout(() => {
-            resolve(items);
-        }, 500);
-    });
+        return response.data;
+    } catch (error) {
+        console.error('Error getting item by id:', error);
+        throw error;
+    }
 };
