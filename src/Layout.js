@@ -4,7 +4,7 @@ import {Box, Typography} from '@mui/material';
 const Layout = ({ children, title }) => {
     return (
         <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
-            <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 10}}>
+            <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 5}}>
                 <Typography variant="h2" gutterBottom>
                     {title}
                 </Typography>

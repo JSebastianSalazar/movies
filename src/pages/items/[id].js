@@ -1,47 +1,83 @@
+// pages/items/[id].js
+import React from 'react';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { Card, CardContent, Typography } from '@mui/material';
-import { getItemById } from '@/lib/api';
-import Head from 'next/head';
+import { Card, CardContent, Typography, CardMedia, Button, Grid, Box, Chip } from '@mui/material';
+import { getItemById } from '../../lib/api';
+import Layout from "@/Layout";
 
-const ItemDetail = () => {
+const ItemDetail = ({ item }) => {
     const router = useRouter();
     const { id } = router.query;
-    const [item, setItem] = useState(null);
-
-    useEffect(() => {
-        const fetchItem = async () => {
-            if (id) {
-                try {
-                    const fetchedItem = await getItemById(id);
-                    setItem(fetchedItem);
-                } catch (error) {
-                    console.error('Error fetching item:', error);
-                }
-            }
-        };
-
-        fetchItem();
-    }, [id]);
-
-    if (!item) {
-        return <div>Loading...</div>;
-    }
 
     return (
-        <div className="container mx-auto p-8">
-            <Head>
-                <title>{item.title}</title>
-            </Head>
-            <h1 className="text-4xl font-bold mb-8">Item Detail</h1>
-            <Card className="max-w-sm mx-auto">
-                <CardContent>
-                    <Typography variant="h6">{item.title}</Typography>
-                    <Typography color="textSecondary">{item.description}</Typography>
-                </CardContent>
-            </Card>
-        </div>
+        <Layout title={'Details Movie'}>
+            <Grid container justifyContent="center" alignItems="center" style={{ height: '40vh' }}>
+                <Card style={{ maxWidth: 500, width: '80%', borderRadius: '15px' }} elevation={10}>
+                    <CardContent color='primary'>
+                        <CardMedia
+                            component="img"
+                            alt={item.name}
+                            height="250px"
+                            image={item.image}
+                            style={{ objectFit: 'fill',borderTopLeftRadius: '20px', borderTopRightRadius: '20px' }}
+                        />
+                        <Box mb={3}>
+                            <Typography variant="h4" align="center">
+                                {item.name}
+                            </Typography>
+                        </Box>
+                        <Typography color="textSecondary" gutterBottom align="center">
+                            Status: {item.status ? 'Active' : 'Inactive'}
+                        </Typography>
+                        <Typography color="textSecondary" gutterBottom align="center">
+                            Author: {item.author}
+                        </Typography>
+                        <Typography color="textSecondary" paragraph align="center">
+                            Genres:
+                        </Typography>
+                        <Box display="flex" justifyContent="center" mb={2}>
+                            {item.genres.split(',').map((genre, index) => (
+                                <Chip key={index} label={genre.trim()} color="primary" style={{ margin: '4px' }} />
+                            ))}
+                        </Box>
+                        <Typography color="textSecondary" paragraph align="center">
+                            Overview:
+                        </Typography>
+                        <Typography color="textSecondary" paragraph align="center">
+                            {item.overview}
+                        </Typography>
+                        <Box mt={3}>
+                            <Button variant="contained" color="primary" onClick={() => router.back()} fullWidth>
+                                Back to List
+                            </Button>
+                        </Box>
+                    </CardContent>
+                </Card>
+            </Grid>
+        </Layout>
+
     );
 };
+
+export async function getServerSideProps(context) {
+    const { id } = context.query;
+
+    try {
+        // Llamar a la función getItemById en el servidor
+        const item = await getItemById(id);
+
+        // Pasar el resultado como propiedades a la página
+        return {
+            props: {
+                item,
+            },
+        };
+    } catch (error) {
+        console.error('Error getting item by id:', error);
+        return {
+            notFound: true,
+        };
+    }
+}
 
 export default ItemDetail;

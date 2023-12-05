@@ -7,30 +7,30 @@ import {Item} from "@/components/Item";
 import Layout from "@/Layout";
 
 const ItemsList = ({items}) => {
-
+    console.log(items)
     return (
-            <Layout title={'Movies'}>
-                <Grid
-                    sx={{width: '100%'}}
-                    container
-                    spacing={5}
-                >
-                    {items && items.map((item) => (
-                        <Item key={item.id} name={item.name} id={item.id} image={item.image} author={item.author}/>
-                    ))}
+        <Layout title={'Movies'}>
+            <Grid
+                sx={{width: '100%'}}
+                container
+                spacing={5}
+            >
+                {items && items.map((item) => (
+                    <Item key={item.id} name={item.name} id={item.id} image={item.image} author={item.author}/>
+                ))}
 
-                    {items.length === 0 && (
-                        <>
-                            <Grid item xs={6}>
-                                <Skeleton variant="rectangular" width="100%" height={200}/>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Skeleton variant="rectangular" width="100%" height={200}/>
-                            </Grid>
-                        </>
-                    )}
-                </Grid>
-            </Layout>
+                {items.length === 0 && (
+                    <>
+                        <Grid item xs={6}>
+                            <Skeleton variant="rectangular" width="100%" height={200}/>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Skeleton variant="rectangular" width="100%" height={200}/>
+                        </Grid>
+                    </>
+                )}
+            </Grid>
+        </Layout>
     );
 };
 
@@ -40,7 +40,7 @@ export async function getServerSideProps(context) {
     const {search} = query;
 
     const items = await searchItems(search);
-
+    console.log(items)
     return {
         props: {
             items,
